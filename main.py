@@ -3,7 +3,6 @@ from pydantic import BaseModel
 from typing import Optional
 import joblib
 import numpy as np
-import pandas as pd
 
 # Inisialisasi FastAPI
 app = FastAPI()
@@ -11,16 +10,6 @@ app = FastAPI()
 # Muat model XGBoost yang telah dilatih dan scaler
 model = joblib.load('xgboost_model_tuned.pkl')
 scaler = joblib.load('scaler.pkl')
-
-# Membaca dataset
-df_newest = pd.read_csv('data_pln_encode.csv')
-
-# Hitung rata-rata Customer_Growth_Rate dan Efficiency_
-avg_customer_growth_rate = df_newest["Customer_Growth_Rate"].mean()
-avg_efficiency = df_newest["Efficiency_"].mean()
-
-# Data terakhir untuk 2022
-last_year_data = df_newest[df_newest["Tahun"] == 2022]
 
 # Membuat model Pydantic untuk validasi input data
 class SalesData(BaseModel):
